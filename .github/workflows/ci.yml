@@ -13,7 +13,7 @@ jobs:
     steps:
     # 1. El robot descarga todo tu código
     - name: Clonar el repositorio
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # 2. El robot intenta construir la imagen del microservicio de Pacientes
     - name: Construir imagen de Pacientes
