@@ -1,0 +1,24 @@
+name: Integracion Continua (CI)
+
+# El robot se despertará cada vez que hagas un "push" a la rama main
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  construir-imagenes:
+    # GitHub nos presta una computadora pequeña con Ubuntu y Docker ya instalado
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. El robot descarga todo tu código
+    - name: Clonar el repositorio
+      uses: actions/checkout@v3
+
+    # 2. El robot intenta construir la imagen del microservicio de Pacientes
+    - name: Construir imagen de Pacientes
+      run: docker build -t pacientes-api:test ./pacientes_service
+
+    # 3. El robot intenta construir la imagen del microservicio de Agenda
+    - name: Construir imagen de Agenda
+      run: docker build -t agenda-api:test ./agenda_service
