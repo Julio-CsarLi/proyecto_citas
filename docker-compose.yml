@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  # Nuestro primer contenedor (nota que este nombre es el que usamos en la URL)
+  pacientes-service:
+    build: ./pacientes_service
+    ports:
+      - "8001:8001"
+
+  # Nuestro segundo contenedor
+  agenda-service:
+    build: ./agenda_service
+    ports:
+      - "8002:8002"
+    depends_on:
+      - pacientes-service # Le decimos que espere a que pacientes encienda primero

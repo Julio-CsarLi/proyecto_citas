@@ -1,0 +1,36 @@
+# 1. EL DEPLOYMENT (El contenedor de la Agenda)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agenda-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: agenda
+  template:
+    metadata:
+      labels:
+        app: agenda
+    spec:
+      containers:
+      - name: agenda-container
+        image: agenda-api:local
+        imagePullPolicy: IfNotPresent # Ya aprendimos la lección de Docker Desktop 😉
+        ports:
+        - containerPort: 8002
+
+---
+# 2. EL SERVICE (La red)
+apiVersion: v1
+kind: Service
+metadata:
+  name: agenda-service
+spec:
+  type: LoadBalancer # ¡NUEVO! Esto abre un "túnel" para que puedas entrar desde tu navegador.
+  selector:
+    app: agenda
+  ports:
+    - protocol: TCP
+      port: 8002
+      targetPort: 8002

@@ -1,0 +1,35 @@
+# 1. EL DEPLOYMENT (Los contenedores)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pacientes-deployment
+spec:
+  replicas: 1 # Queremos 1 copia corriendo
+  selector:
+    matchLabels:
+      app: pacientes
+  template:
+    metadata:
+      labels:
+        app: pacientes
+    spec:
+      containers:
+      - name: pacientes-container
+        image: pacientes-api:local
+        imagePullPolicy: IfNotPresent # ¡Súper importante! Le dice que use la imagen local que acabas de crear y no la busque en internet.
+        ports:
+        - containerPort: 8001
+
+---
+# 2. EL SERVICE (La red interna)
+apiVersion: v1
+kind: Service
+metadata:
+  name: pacientes-service # ¡Este es el nombre exacto que busca la Agenda!
+spec:
+  selector:
+    app: pacientes
+  ports:
+    - protocol: TCP
+      port: 8001
+      targetPort: 8001
