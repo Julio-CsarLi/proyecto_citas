@@ -7,11 +7,11 @@ on:
 
 jobs:
   construir-imagenes:
-    # GitHub nos presta una computadora pequeña con Ubuntu y Docker ya instalado
+    # GitHub con Ubuntu y Docker ya instalado
     runs-on: ubuntu-latest
 
     steps:
-    # 1. se descarga todo tu código
+    # 1. se descarga todo el codigo
     - name: Clonar el repositorio
       uses: actions/checkout@v4
 
